@@ -3,211 +3,360 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Deraneck Aerial | Drohnendokumentation für Bauprojekte</title>
-  <meta name="description" content="Deraneck Aerial bietet professionelle Drohnendokumentation, Baufortschrittsberichte und Objektkontrollen in Norddeutschland. Strukturierte Luftaufnahmen, Statusupdates und digitale Archivierung." />
+  <title>Deraneck Aerial | Bau- und Projektdokumentation per Drohne</title>
+  <meta name="description" content="Deraneck Aerial dokumentiert Bauprojekte und Grundstücke per Drohne in Norddeutschland. Regelmäßige Statusupdates, Investoren-Reporting und digitale Archivierung." />
   <style>
     :root{
-      --bg:#ffffff;
-      --text:#0f172a;      /* very dark blue */
-      --muted:#475569;     /* slate */
-      --line:#e2e8f0;      /* light gray */
-      --card:#f8fafc;      /* near white */
-      --brand:#0b2a5b;     /* navy */
-      --brand2:#0ea5e9;    /* subtle blue accent */
+      --bg:#0b1220;
+      --surface:#0f1a30;
+      --card:#111f3a;
+      --line:rgba(255,255,255,.08);
+      --text:#eaf1ff;
+      --muted:rgba(234,241,255,.72);
+      --muted2:rgba(234,241,255,.55);
+      --brand:#44b7ff;
+      --brand2:#7c4dff;
+      --ok:#4ade80;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
       --radius:18px;
-      --shadow: 0 10px 30px rgba(2,6,23,.08);
       --max: 1120px;
     }
 
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(124,77,255,.22), transparent 55%),
+                  radial-gradient(900px 600px at 90% 10%, rgba(68,183,255,.18), transparent 55%),
+                  var(--bg);
       color:var(--text);
-      background:var(--bg);
-      line-height:1.5;
+      line-height:1.55;
     }
     a{color:inherit}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 20px;}
-    header{
-      position:sticky; top:0; z-index:10;
-      background:rgba(255,255,255,.9);
-      backdrop-filter:saturate(180%) blur(10px);
+    .topbar{
+      position:sticky; top:0; z-index:30;
+      background: rgba(11,18,32,.65);
+      backdrop-filter: blur(14px);
       border-bottom:1px solid var(--line);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 0;
-      gap:16px;
+      gap:12px;
     }
     .brand{
-      display:flex; align-items:center; gap:12px; text-decoration:none;
-      font-weight:700; letter-spacing:.2px;
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none;
+      min-width: 200px;
     }
     .logo{
-      width:36px; height:36px; border-radius:12px;
-      background: radial-gradient(circle at 30% 30%, var(--brand2), var(--brand));
-      box-shadow: 0 8px 20px rgba(14,165,233,.25);
+      width:38px; height:38px; border-radius:14px;
+      background: radial-gradient(circle at 30% 30%, var(--brand), var(--brand2));
+      box-shadow: 0 10px 30px rgba(68,183,255,.18);
     }
-    nav a{
+    .brand strong{letter-spacing:.35px}
+    .brand small{display:block; color:var(--muted2); margin-top:-2px; font-weight:700}
+    .links{
+      display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .links a{
       text-decoration:none;
       color:var(--muted);
-      font-weight:600;
-      margin-left:14px;
+      font-weight:700;
+      font-size:14px;
+      padding:8px 10px;
+      border-radius:999px;
     }
-    nav a:hover{color:var(--text)}
+    .links a:hover{background:rgba(255,255,255,.06); color:var(--text)}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px;
-      border-radius:14px;
-      text-decoration:none;
-      font-weight:700;
-      border:1px solid transparent;
-      transition:transform .05s ease, opacity .2s ease;
       gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:900;
+      text-decoration:none;
+      border:1px solid transparent;
       cursor:pointer;
+      transition: transform .06s ease, opacity .2s ease, border-color .2s ease;
+      white-space:nowrap;
     }
-    .btn:active{transform:translateY(1px)}
-    .btn-primary{background:var(--brand); color:#fff;}
-    .btn-primary:hover{opacity:.92}
-    .btn-ghost{background:#fff; color:var(--brand); border-color:var(--line);}
-    .btn-ghost:hover{border-color:#cbd5e1}
+    .btn:active{transform: translateY(1px)}
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(68,183,255,.95), rgba(124,77,255,.95));
+      color:#071021;
+      box-shadow: 0 18px 60px rgba(68,183,255,.16);
+    }
+    .btn-primary:hover{opacity:.93}
+    .btn-ghost{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.12);
+      color: var(--text);
+    }
+    .btn-ghost:hover{border-color: rgba(255,255,255,.22)}
 
+    /* HERO */
     .hero{
-      padding:60px 0 28px;
+      padding:56px 0 26px;
     }
     .hero-grid{
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:26px;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
       align-items:stretch;
     }
     .kicker{
       display:inline-flex; align-items:center; gap:10px;
-      color:var(--brand);
-      font-weight:800;
-      letter-spacing:.2px;
-      font-size:14px;
       padding:8px 12px;
       border-radius:999px;
-      background: #eff6ff;
-      border:1px solid #dbeafe;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-weight:800;
+      font-size:13px;
       width:fit-content;
     }
     h1{
       margin:14px 0 10px;
-      font-size:44px;
-      line-height:1.08;
-      letter-spacing:-.8px;
+      font-size:46px;
+      line-height:1.06;
+      letter-spacing:-1px;
     }
     .sub{
       margin:0 0 18px;
       color:var(--muted);
       font-size:18px;
-      max-width:64ch;
+      max-width: 70ch;
     }
-    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
+    .hero-cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
+    .hero-note{
+      margin-top:12px;
+      color: var(--muted2);
+      font-size:13px;
+      max-width: 70ch;
+    }
+
     .hero-card{
-      background: linear-gradient(180deg, #ffffff, #f8fafc);
-      border:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
       border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
-      padding:22px;
+      padding:18px;
+      min-height: 320px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      min-height:240px;
+    }
+    .hero-card .img{
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      filter:saturate(1.05) contrast(1.05);
+      opacity:.55;
+      transform: scale(1.05);
+    }
+    .hero-card .overlay{
+      position:absolute;
+      inset:0;
+      background: radial-gradient(800px 420px at 20% 0%, rgba(68,183,255,.35), transparent 55%),
+                  radial-gradient(700px 420px at 90% 20%, rgba(124,77,255,.28), transparent 55%),
+                  linear-gradient(180deg, rgba(11,18,32,.35), rgba(11,18,32,.92));
+    }
+    .hero-card .content{
+      position:relative;
+      z-index:2;
     }
     .hero-card h3{margin:0 0 10px; font-size:16px;}
-    .hero-card ul{margin:0; padding-left:18px; color:var(--muted);}
-    .hero-card li{margin:6px 0;}
-    .badge{
-      margin-top:16px;
-      display:flex; gap:10px; flex-wrap:wrap;
-      color:var(--muted);
-      font-size:13px;
+    .bullets{margin:0; padding-left:18px; color: var(--muted); font-weight:650;}
+    .bullets li{margin:7px 0}
+    .stats{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:14px;
     }
-    .pill{
-      padding:8px 10px;
-      border-radius:999px;
-      background:var(--card);
-      border:1px solid var(--line);
+    .stat{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      padding:12px;
     }
+    .stat strong{display:block; font-size:16px;}
+    .stat span{display:block; color:var(--muted2); font-size:12px; margin-top:2px;}
 
     section{padding:34px 0;}
     .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
       margin-bottom:14px;
     }
     .section-title h2{
       margin:0;
       font-size:26px;
-      letter-spacing:-.3px;
+      letter-spacing:-.4px;
     }
     .section-title p{
-      margin:0; color:var(--muted); max-width:70ch;
+      margin:0;
+      color:var(--muted);
+      max-width: 78ch;
     }
 
+    /* Cards */
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
-      gap:16px;
+      gap:14px;
     }
     .card{
       grid-column: span 6;
-      background:var(--card);
-      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
       border-radius: var(--radius);
-      padding:18px;
+      padding:16px;
+      overflow:hidden;
+      box-shadow: 0 14px 40px rgba(0,0,0,.22);
     }
     .card h3{margin:0 0 8px; font-size:18px;}
     .card p{margin:0; color:var(--muted);}
-    .card ul{margin:10px 0 0; padding-left:18px; color:var(--muted);}
+    .card ul{margin:10px 0 0; padding-left:18px; color:var(--muted); font-weight:650;}
     .card li{margin:6px 0;}
 
+    .icon-row{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+    .icon{
+      width:38px; height:38px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(68,183,255,.18), rgba(124,77,255,.16));
+      border: 1px solid rgba(255,255,255,.10);
+      display:flex; align-items:center; justify-content:center;
+      flex:0 0 auto;
+    }
+    .icon svg{width:20px; height:20px; opacity:.9}
+
+    /* Process */
     .process{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap:16px;
+      gap:14px;
     }
     .step{
-      background:#fff;
-      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.10);
       border-radius: var(--radius);
-      padding:18px;
+      padding:16px;
     }
     .num{
-      width:34px; height:34px; border-radius:12px;
-      background:#eff6ff;
-      color:var(--brand);
+      width:34px; height:34px;
+      border-radius:14px;
+      background: rgba(68,183,255,.16);
+      border: 1px solid rgba(68,183,255,.28);
       display:flex; align-items:center; justify-content:center;
       font-weight:900;
       margin-bottom:10px;
-      border:1px solid #dbeafe;
+      color: var(--text);
     }
     .step h3{margin:0 0 8px;}
     .step p{margin:0; color:var(--muted);}
 
-    .reasons{
+    /* Packages */
+    .packages{
       display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap:10px;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
     }
-    .reason{
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:#fff;
+    .pkg{
+      border-radius: var(--radius);
+      padding:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .pkg.featured{
+      background: linear-gradient(180deg, rgba(68,183,255,.12), rgba(255,255,255,.02));
+      border-color: rgba(68,183,255,.28);
+      box-shadow: 0 20px 60px rgba(68,183,255,.10);
+    }
+    .pkg .tag{
+      display:inline-block;
+      font-size:12px;
+      font-weight:900;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
       color:var(--muted);
-      font-weight:700;
-      text-align:center;
-      font-size:14px;
+      margin-bottom:10px;
+    }
+    .pkg.featured .tag{
+      background: rgba(68,183,255,.18);
+      border-color: rgba(68,183,255,.32);
+      color: var(--text);
+    }
+    .pkg h3{margin:0 0 8px;}
+    .pkg p{margin:0 0 10px; color:var(--muted);}
+    .pkg ul{margin:0; padding-left:18px; color:var(--muted); font-weight:650;}
+    .pkg li{margin:6px 0;}
+    .pkg .price{
+      margin-top:12px;
+      color: var(--muted2);
+      font-size:13px;
     }
 
+    /* Gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .shot{
+      grid-column: span 4;
+      border-radius: var(--radius);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 18px 50px rgba(0,0,0,.25);
+    }
+    .shot img{width:100%; height:220px; object-fit:cover; display:block;}
+    .shot .cap{
+      padding:12px;
+      color: var(--muted);
+      font-size:13px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* FAQ */
+    .faq{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    details{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding:14px 14px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:900;
+      color: var(--text);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color:var(--muted);}
+
+    /* Contact */
     .contact{
-      background: linear-gradient(180deg, #ffffff, #f8fafc);
-      border-top:1px solid var(--line);
-      border-bottom:1px solid var(--line);
+      border-top:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
     }
     form{
       display:grid;
@@ -215,91 +364,119 @@
       gap:12px;
       margin-top:16px;
     }
-    label{font-weight:700; font-size:13px;}
+    label{font-weight:900; font-size:13px; color:var(--text);}
     .field{grid-column: span 6;}
     .field.full{grid-column: span 12;}
     input, textarea, select{
       width:100%;
       padding:12px 12px;
       border-radius:14px;
-      border:1px solid #cbd5e1;
-      background:#fff;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
       margin-top:6px;
       font: inherit;
+      outline: none;
     }
-    textarea{min-height:120px; resize:vertical;}
-    .form-actions{grid-column: span 12; display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
-    .hint{color:var(--muted); font-size:13px;}
-    footer{padding:26px 0; color:var(--muted); font-size:13px;}
-    footer a{color:var(--muted); text-decoration:underline;}
+    input::placeholder, textarea::placeholder{color: rgba(234,241,255,.45);}
+    textarea{min-height:130px; resize:vertical;}
+    .form-actions{grid-column: span 12; display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
+    .hint{color:var(--muted2); font-size:13px;}
 
-    @media (max-width: 900px){
-      .hero-grid{grid-template-columns: 1fr;}
-      h1{font-size:38px;}
+    footer{
+      padding:26px 0;
+      color: var(--muted2);
+      font-size:13px;
+    }
+    footer a{color: var(--muted2); text-decoration: underline;}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr;}
+      h1{font-size:40px;}
       .card{grid-column: span 12;}
-      .process{grid-template-columns: 1fr;}
-      .reasons{grid-template-columns: 1fr 1fr;}
+      .process{grid-template-columns:1fr;}
+      .packages{grid-template-columns:1fr;}
+      .faq{grid-template-columns:1fr;}
+      .shot{grid-column: span 12;}
       .field{grid-column: span 12;}
+      .links{display:none;}
     }
   </style>
 </head>
+
 <body>
-  <header>
+  <div class="topbar">
     <div class="wrap">
       <div class="nav">
         <a class="brand" href="#top" aria-label="Deraneck Aerial Start">
           <div class="logo" aria-hidden="true"></div>
           <div>
-            <div style="font-size:14px; color:var(--muted); font-weight:800;">DERANECK</div>
-            <div style="font-size:16px; margin-top:-2px;">Aerial</div>
+            <strong>DERANECK AERIAL</strong>
+            <small>Bau- und Projektdokumentation per Drohne</small>
           </div>
         </a>
-        <nav aria-label="Hauptnavigation">
+
+        <div class="links" aria-label="Navigation">
           <a href="#leistungen">Leistungen</a>
+          <a href="#pakete">Pakete</a>
           <a href="#ablauf">Ablauf</a>
-          <a href="#warum">Warum wir</a>
+          <a href="#beispiele">Beispiele</a>
+          <a href="#faq">FAQ</a>
           <a href="#kontakt">Kontakt</a>
-        </nav>
+        </div>
+
+        <a class="btn btn-primary" href="#kontakt">Projekt anfragen</a>
       </div>
     </div>
-  </header>
+  </div>
 
   <main id="top">
     <section class="hero">
       <div class="wrap">
         <div class="hero-grid">
           <div>
-            <div class="kicker">Bau und Projektdokumentation aus der Luft</div>
+            <div class="kicker">Norddeutschland, strukturiert, zuverlässig</div>
             <h1>Baufortschritt sichtbar machen.</h1>
             <p class="sub">
-              Professionelle Drohnendokumentation für Bauprojekte in Norddeutschland.
-              Strukturierte Luftaufnahmen, regelmäßige Statusupdates und digitale Projektarchivierung für Bauträger,
-              Bauunternehmen und Investoren.
+              Deraneck Aerial dokumentiert Bauprojekte, Grundstücke und Bestandsobjekte per Drohne.
+              Regelmäßige Statusupdates, Investoren-Reporting und saubere digitale Archivierung.
             </p>
-            <div class="cta-row">
-              <a class="btn btn-primary" href="#kontakt">Projekt anfragen</a>
-              <a class="btn btn-ghost" href="#leistungen">Leistungen ansehen</a>
+
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#kontakt">Unverbindlich anfragen</a>
+              <a class="btn btn-ghost" href="#pakete">Pakete ansehen</a>
             </div>
-            <div class="badge">
-              <div class="pill">Norddeutschland</div>
-              <div class="pill">Monitoring Pakete</div>
-              <div class="pill">Investoren Reporting</div>
-              <div class="pill">3D Mapping auf Anfrage</div>
+
+            <div class="hero-note">
+              Hinweis: 3D Mapping ist auf Anfrage möglich und befindet sich im Aufbau. Wir verkaufen nur, was wir sauber liefern können.
             </div>
           </div>
 
-          <aside class="hero-card" aria-label="Kurzüberblick">
-            <div>
+          <aside class="hero-card" aria-label="Hero Bild und Highlights">
+            <!-- Free-to-use Example Image (Unsplash). Replace later with your own. -->
+            <div class="img" style="background-image:url('https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1600&q=80');"></div>
+            <div class="overlay"></div>
+
+            <div class="content">
               <h3>Wofür Kunden uns buchen</h3>
-              <ul>
+              <ul class="bullets">
                 <li>Regelmäßige Baufortschrittsdokumentation</li>
-                <li>Statusupdates für Bauherrschaft und Investoren</li>
-                <li>Objekt und Grundstückskontrolle, zum Beispiel Dächer</li>
-                <li>Strukturierte Ablage und weltweiter Zugriff auf Material</li>
+                <li>Statusmaterial für Bauherrschaft und Investoren</li>
+                <li>Objekt- und Grundstückskontrolle, zum Beispiel Dächer</li>
+                <li>Strukturierte Ablage für schnelle Weitergabe</li>
               </ul>
             </div>
-            <div class="hint" style="margin-top:14px;">
-              Hinweis: 3D Mapping und Photogrammetrie sind auf Anfrage möglich und befinden sich im Aufbau.
+
+            <div class="stats" aria-label="Kennzahlen">
+              <div class="stat">
+                <strong>Monitoring</strong>
+                <span>Wöchentlich oder monatlich</span>
+              </div>
+              <div class="stat">
+                <strong>Reporting</strong>
+                <span>Für Partner und Investoren</span>
+              </div>
             </div>
           </aside>
         </div>
@@ -310,48 +487,126 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Leistungen</h2>
-          <p>Klare, strukturierte Luftdokumentation für Projekte in Norddeutschland. Bodennah organisiert, hochwertig geliefert.</p>
+          <p>Fokus auf Dokumentation und Nachweisbarkeit. Nicht nur schöne Bilder, sondern planbare Updates und klare Ablage.</p>
         </div>
 
         <div class="grid">
           <div class="card">
-            <h3>Baufortschrittsdokumentation</h3>
-            <p>Regelmäßige Kontrollflüge und saubere Vergleichsaufnahmen, damit Fortschritt nachvollziehbar bleibt.</p>
+            <div class="icon-row">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M7 12h10M12 7v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Baufortschrittsdokumentation</h3>
+            </div>
+            <p>Regelmäßige Kontrollflüge mit wiederkehrenden Perspektiven und Vergleichbarkeit über Zeit.</p>
             <ul>
-              <li>Wöchentlich oder monatlich nach Bedarf</li>
-              <li>Vergleichsbilder nach Perspektive und Raster</li>
+              <li>Wöchentlich oder monatlich</li>
+              <li>Vergleichsbilder nach Raster</li>
               <li>Projektbezogene Archivierung</li>
             </ul>
           </div>
 
           <div class="card">
-            <h3>Investoren Reporting</h3>
-            <p>Visuelles Material für Updates und Reports, professionell aufbereitet und klar strukturiert.</p>
+            <div class="icon-row">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" />
+                  <path d="M7 10h6M7 14h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Investoren-Reporting</h3>
+            </div>
+            <p>Material für Updates, Reports und Präsentationen, klar sortiert und schnell weiterleitbar.</p>
             <ul>
-              <li>Statusbilder und kurze Bildauswahl für Präsentationen</li>
-              <li>Material für Gesellschafter und Finanzierungspartner</li>
-              <li>Konstante Perspektiven für Vergleichbarkeit</li>
+              <li>Statusbilder für Stakeholder</li>
+              <li>Vergleichsaufnahmen für Reports</li>
+              <li>Konstante Perspektiven</li>
             </ul>
           </div>
 
           <div class="card">
-            <h3>Objekt und Grundstückskontrolle</h3>
-            <p>Kontrollflüge für Bestandsobjekte, Gewerbeflächen und Grundstücke, je nach Projektanforderung.</p>
+            <div class="icon-row">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 20l6-6 4 4 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="2" opacity=".55"/>
+                </svg>
+              </div>
+              <h3>Objekt- und Grundstückskontrolle</h3>
+            </div>
+            <p>Kontrollflüge für Bestandsobjekte, Gewerbeflächen und Grundstücke, projektabhängig planbar.</p>
             <ul>
-              <li>Dachinspektionen und Dokumentation</li>
-              <li>Industrie und Gewerbeflächen</li>
-              <li>Schadensdokumentation und Bestandsaufnahmen</li>
+              <li>Dächer und Außenhüllen</li>
+              <li>Industrie- und Gewerbeflächen</li>
+              <li>Schadensdokumentation</li>
             </ul>
           </div>
 
           <div class="card">
-            <h3>3D Mapping (auf Anfrage)</h3>
-            <p>Photogrammetrie und Geländeaufnahmen. Dieses Angebot befindet sich im Aufbau und ist projektabhängig.</p>
+            <div class="icon-row">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3l8 6-8 6-8-6 8-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M4 15l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>3D Mapping (auf Anfrage)</h3>
+            </div>
+            <p>Photogrammetrie und Geländeaufnahmen. Dieses Angebot befindet sich im Aufbau und ist objektabhängig.</p>
             <ul>
-              <li>Individuelle Anfrage und Machbarkeitscheck</li>
-              <li>Je nach Objekt und Flugfreigabe</li>
+              <li>Machbarkeitscheck vorab</li>
               <li>Lieferumfang nach Absprache</li>
+              <li>Projektabhängige Umsetzung</li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pakete">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>Pakete</h2>
+          <p>Bodennah starten, professionell liefern. Für wiederkehrende Dokumentation lohnt sich Monitoring.</p>
+        </div>
+
+        <div class="packages">
+          <div class="pkg">
+            <div class="tag">Basis</div>
+            <h3>Einzelflug</h3>
+            <p>Für einmalige Dokumentation, Statusupdate oder spezielle Kontrolle.</p>
+            <ul>
+              <li>Abgestimmte Motive</li>
+              <li>Bearbeitete Auswahlbilder</li>
+              <li>Digitale Bereitstellung</li>
+            </ul>
+            <div class="price">Preis: nach Projektumfang</div>
+          </div>
+
+          <div class="pkg featured">
+            <div class="tag">Empfohlen</div>
+            <h3>Monitoring</h3>
+            <p>Regelmäßige Updates mit Vergleichbarkeit. Ideal für Bauphasen.</p>
+            <ul>
+              <li>Wöchentlich oder monatlich</li>
+              <li>Wiederkehrende Perspektiven</li>
+              <li>Projektarchiv und Struktur</li>
+            </ul>
+            <div class="price">Preis: nach Intervall und Standort</div>
+          </div>
+
+          <div class="pkg">
+            <div class="tag">Premium</div>
+            <h3>Reporting</h3>
+            <p>Für Investoren und Partner. Priorisiert, sauber aufbereitet, reportfähig.</p>
+            <ul>
+              <li>Mehrere Flüge pro Monat</li>
+              <li>Material für Reports und Präsentationen</li>
+              <li>Optional 3D Mapping auf Anfrage</li>
+            </ul>
+            <div class="price">Preis: nach Projektanforderung</div>
           </div>
         </div>
       </div>
@@ -361,42 +616,84 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Ablauf</h2>
-          <p>Ein klarer Prozess, damit Sie verlässliche Updates bekommen und Material sauber nutzen können.</p>
+          <p>Ein klarer Prozess, wie ihn professionelle Anbieter nutzen. Planbar, sauber, wiederholbar.</p>
         </div>
 
         <div class="process">
           <div class="step">
             <div class="num">1</div>
-            <h3>Projektbriefing</h3>
-            <p>Wir klären Standort, Intervall, Motive und Zweck der Dokumentation. Danach erhalten Sie ein klares Angebot.</p>
+            <h3>Briefing</h3>
+            <p>Standort, Ziel, Motive, Intervall. Danach bekommen Sie ein klares Angebot und einen Plan.</p>
           </div>
           <div class="step">
             <div class="num">2</div>
             <h3>Durchführung</h3>
-            <p>Strukturierte Flüge nach festem Raster. Je nach Paket mit Vergleichsperspektiven und wiederkehrenden Aufnahmen.</p>
+            <p>Strukturierte Flüge nach Raster. Fokus auf Vergleichbarkeit und Dokumentationsnutzen.</p>
           </div>
           <div class="step">
             <div class="num">3</div>
-            <h3>Digitale Bereitstellung</h3>
-            <p>Aufbereitung, Sortierung und Übergabe. So haben Sie jederzeit Zugriff und können Inhalte direkt weiterverwenden.</p>
+            <h3>Lieferung</h3>
+            <p>Sortiert, aufbereitet und bereitgestellt. So können Sie Inhalte direkt verwenden und weiterleiten.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="warum">
+    <section id="beispiele">
       <div class="wrap">
         <div class="section-title">
-          <h2>Warum Deraneck Aerial</h2>
-          <p>Regional verlässlich, in der Auslieferung professionell. Bodennah im Umgang, hochwertig im Ergebnis.</p>
+          <h2>Beispiele</h2>
+          <p>Platzhalter mit free-to-use Bildern. Ersetzen Sie diese später durch eigene Aufnahmen. Diese Sektion wirkt stark, weil Besucher sofort etwas sehen.</p>
         </div>
 
-        <div class="reasons">
-          <div class="reason">Regional in Norddeutschland</div>
-          <div class="reason">Schnelle Verfügbarkeit</div>
-          <div class="reason">Strukturierte Dokumentation</div>
-          <div class="reason">Klare Kommunikation</div>
-          <div class="reason">Monitoring Pakete</div>
+        <div class="gallery">
+          <div class="shot">
+            <img alt="Baustelle aus der Luft" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80">
+            <div class="cap">Baufortschritt, konsistente Perspektive, ideal für Vergleich über Zeit.</div>
+          </div>
+          <div class="shot">
+            <img alt="Industriefläche aus der Luft" src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80">
+            <div class="cap">Gewerbe und Industrie, Dokumentation von Flächen und Außenhüllen.</div>
+          </div>
+          <div class="shot">
+            <img alt="Grundstück und Umgebung" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80">
+            <div class="cap">Grundstücksstatus, Umfeld, Zuwegungen, klare Übersicht.</div>
+          </div>
+        </div>
+
+        <p class="hint" style="margin-top:12px;">
+          Hinweis: Unsplash Bilder sind free-to-use. Für maximale Rechtssicherheit können wir später eine kurze Quellenliste im Footer ergänzen.
+        </p>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>FAQ</h2>
+          <p>Die häufigsten Fragen, die Interessenten vor einer Anfrage haben. Das senkt Rückfragen und erhöht Vertrauen.</p>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>In welchen Intervallen sind Flüge möglich?</summary>
+            <p>Typisch sind wöchentliche oder monatliche Intervalle. Das Intervall hängt vom Projekt, dem Baufortschritt und dem Reporting-Bedarf ab.</p>
+          </details>
+
+          <details>
+            <summary>Wie bekomme ich die Daten?</summary>
+            <p>Sie erhalten eine strukturierte digitale Bereitstellung. Auf Wunsch zusätzlich eine Report-Auswahl für Investorenupdates.</p>
+          </details>
+
+          <details>
+            <summary>Welche Regionen decken Sie ab?</summary>
+            <p>Startfokus ist Norddeutschland. Projekte darüber hinaus sind nach Absprache möglich.</p>
+          </details>
+
+          <details>
+            <summary>Bieten Sie 3D Mapping an?</summary>
+            <p>Ja, auf Anfrage und projektabhängig. Dieses Angebot befindet sich im Aufbau. Wir klären Machbarkeit vorab.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -405,53 +702,54 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Projekt anfragen</h2>
-          <p>Schreiben Sie kurz, worum es geht. Sie erhalten zeitnah Rückfragen und ein klares Angebot.</p>
+          <p>Schicken Sie kurz die Eckdaten. Wir melden uns mit Rückfragen und einem klaren Angebot.</p>
         </div>
 
-        <!--
-          IMPORTANT:
-          This form uses mailto for simplicity (no backend required).
-          For a more reliable setup, connect it to Formspree, Netlify Forms, or a similar service.
-        -->
-        <form action="mailto:DEINE_EMAIL@DOMAIN.DE" method="post" enctype="text/plain">
+        <!-- Option 1: Einfach, aber unzuverlässig: mailto -->
+        <!-- <form action="mailto:DEINE_EMAIL@DOMAIN.DE" method="post" enctype="text/plain"> -->
+
+        <!-- Option 2 (empfohlen): Formspree oder Netlify Forms -->
+        <!-- Formspree: https://formspree.io/  -> du bekommst eine URL und trägst sie hier ein -->
+        <form action="https://formspree.io/f/DEINCODE" method="POST">
           <div class="field">
             <label for="name">Name</label>
-            <input id="name" name="Name" type="text" required />
+            <input id="name" name="name" type="text" required />
           </div>
           <div class="field">
-            <label for="firma">Firma</label>
-            <input id="firma" name="Firma" type="text" />
+            <label for="company">Firma</label>
+            <input id="company" name="company" type="text" />
           </div>
           <div class="field">
-            <label for="standort">Projektstandort</label>
-            <input id="standort" name="Projektstandort" type="text" placeholder="z. B. Kiel, Hamburg, Lübeck" required />
+            <label for="location">Projektstandort</label>
+            <input id="location" name="location" type="text" placeholder="z. B. Kiel, Hamburg, Lübeck" required />
           </div>
           <div class="field">
-            <label for="art">Projektart</label>
-            <input id="art" name="Projektart" type="text" placeholder="z. B. Wohnbau, Gewerbe, Bestand" />
+            <label for="type">Projektart</label>
+            <input id="type" name="type" type="text" placeholder="z. B. Wohnbau, Gewerbe, Bestand" />
           </div>
           <div class="field">
-            <label for="email">E Mail</label>
-            <input id="email" name="E-Mail" type="email" required />
+            <label for="interval">Gewünschtes Intervall</label>
+            <select id="interval" name="interval">
+              <option value="einmalig">Einmalig</option>
+              <option value="monatlich">Monatlich</option>
+              <option value="woechentlich">Wöchentlich</option>
+              <option value="individuell">Individuell</option>
+            </select>
           </div>
           <div class="field">
-            <label for="tel">Telefon (optional)</label>
-            <input id="tel" name="Telefon" type="tel" />
+            <label for="email">E-Mail</label>
+            <input id="email" name="email" type="email" required />
           </div>
           <div class="field full">
-            <label for="msg">Nachricht</label>
-            <textarea id="msg" name="Nachricht" placeholder="Was genau benötigen Sie? Welche Frequenz wünschen Sie?"></textarea>
+            <label for="message">Nachricht</label>
+            <textarea id="message" name="message" placeholder="Was genau benötigen Sie? Gibt es Termine oder Besonderheiten?"></textarea>
           </div>
 
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Anfrage senden</button>
-            <div class="hint">Tipp: Für zuverlässige Formulare nutze später Formspree oder Netlify Forms.</div>
+            <span class="hint">Rechtlicher Hinweis: Flüge erfolgen nach geltenden Vorschriften. Projektabhängig können Genehmigungen erforderlich sein.</span>
           </div>
         </form>
-
-        <p class="hint" style="margin-top:12px;">
-          Rechtlicher Hinweis: Flüge erfolgen nach geltenden Vorschriften. Projektabhängig können Genehmigungen erforderlich sein.
-        </p>
       </div>
     </section>
 
@@ -460,23 +758,23 @@
         <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:space-between; align-items:center;">
           <div>© <span id="year"></span> Deraneck Aerial</div>
           <div>
-            <a href="#impressum">Impressum</a> ·
+            <a href="#impressum">Impressum</a> |
             <a href="#datenschutz">Datenschutz</a>
           </div>
         </div>
 
-        <div id="impressum" style="margin-top:18px;">
+        <div id="impressum" style="margin-top:16px;">
           <strong>Impressum</strong><br/>
-          <span class="hint">
-            Bitte ergänzen: Name, Anschrift, Kontakt, USt Id (falls vorhanden), Verantwortlicher gemäß § 18 MStV.
-          </span>
+          <span class="hint">Bitte ergänzen: Name, Anschrift, Kontakt, USt-ID falls vorhanden, Verantwortlicher gemäß § 18 MStV.</span>
         </div>
 
-        <div id="datenschutz" style="margin-top:12px;">
+        <div id="datenschutz" style="margin-top:10px;">
           <strong>Datenschutz</strong><br/>
-          <span class="hint">
-            Bitte ergänzen: Datenschutzhinweise, Verarbeitungszweck, Kontakt, Hosting Provider.
-          </span>
+          <span class="hint">Bitte ergänzen: Hosting, Kontakt, Zweck der Datenerhebung, Formularanbieter falls genutzt (z. B. Formspree).</span>
+        </div>
+
+        <div class="hint" style="margin-top:10px;">
+          Beispielbilder: Unsplash, free-to-use, nur als Platzhalter. Später durch eigenes Material ersetzen.
         </div>
       </div>
     </footer>
