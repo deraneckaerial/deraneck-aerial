@@ -5,23 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Deraneck Aerial | Bau- und Projektdokumentation per Drohne</title>
   <meta name="description" content="Deraneck Aerial dokumentiert Bauprojekte und Grundstücke per Drohne in Norddeutschland. Regelmäßige Statusupdates, Investoren-Reporting und digitale Archivierung." />
+
   <style>
     :root{
       --bg:#0b1220;
-      --surface:#0f1a30;
-      --card:#111f3a;
-      --line:rgba(255,255,255,.08);
       --text:#eaf1ff;
       --muted:rgba(234,241,255,.72);
       --muted2:rgba(234,241,255,.55);
+      --line:rgba(255,255,255,.10);
+      --card:rgba(255,255,255,.04);
       --brand:#44b7ff;
       --brand2:#7c4dff;
-      --ok:#4ade80;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
       --radius:18px;
-      --max: 1120px; 
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --max: 1120px;
     }
-
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
@@ -49,7 +47,7 @@
     .brand{
       display:flex; align-items:center; gap:12px;
       text-decoration:none;
-      min-width: 200px;
+      min-width: 220px;
     }
     .logo{
       width:38px; height:38px; border-radius:14px;
@@ -97,10 +95,7 @@
     }
     .btn-ghost:hover{border-color: rgba(255,255,255,.22)}
 
-    /* HERO */
-    .hero{
-      padding:56px 0 26px;
-    }
+    .hero{padding:56px 0 26px;}
     .hero-grid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
@@ -124,64 +119,36 @@
       line-height:1.06;
       letter-spacing:-1px;
     }
-    .sub{
-      margin:0 0 18px;
-      color:var(--muted);
-      font-size:18px;
-      max-width: 70ch;
-    }
+    .sub{margin:0 0 18px; color:var(--muted); font-size:18px; max-width: 70ch;}
     .hero-cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
-    .hero-note{
-      margin-top:12px;
-      color: var(--muted2);
-      font-size:13px;
-      max-width: 70ch;
-    }
+    .hero-note{margin-top:12px; color: var(--muted2); font-size:13px; max-width: 70ch;}
 
     .hero-card{
-      position:relative;
-      overflow:hidden;
+      position:relative; overflow:hidden;
       border-radius: var(--radius);
       border:1px solid rgba(255,255,255,.12);
       background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
       padding:18px;
       min-height: 320px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
+      display:flex; flex-direction:column; justify-content:space-between;
     }
     .hero-card .img{
-      position:absolute;
-      inset:0;
-      background-size:cover;
-      background-position:center;
-      filter:saturate(1.05) contrast(1.05);
-      opacity:.55;
-      transform: scale(1.05);
+      position:absolute; inset:0;
+      background-size:cover; background-position:center;
+      opacity:.55; transform: scale(1.05);
     }
     .hero-card .overlay{
-      position:absolute;
-      inset:0;
+      position:absolute; inset:0;
       background: radial-gradient(800px 420px at 20% 0%, rgba(68,183,255,.35), transparent 55%),
                   radial-gradient(700px 420px at 90% 20%, rgba(124,77,255,.28), transparent 55%),
                   linear-gradient(180deg, rgba(11,18,32,.35), rgba(11,18,32,.92));
     }
-    .hero-card .content{
-      position:relative;
-      z-index:2;
-    }
+    .hero-card .content{position:relative; z-index:2;}
     .hero-card h3{margin:0 0 10px; font-size:16px;}
     .bullets{margin:0; padding-left:18px; color: var(--muted); font-weight:650;}
     .bullets li{margin:7px 0}
-    .stats{
-      position:relative;
-      z-index:2;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:14px;
-    }
+    .stats{position:relative; z-index:2; display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:14px;}
     .stat{
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.12);
@@ -193,37 +160,19 @@
 
     section{padding:34px 0;}
     .section-title{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-bottom:14px;
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:14px; flex-wrap:wrap; margin-bottom:14px;
     }
-    .section-title h2{
-      margin:0;
-      font-size:26px;
-      letter-spacing:-.4px;
-    }
-    .section-title p{
-      margin:0;
-      color:var(--muted);
-      max-width: 78ch;
-    }
+    .section-title h2{margin:0; font-size:26px; letter-spacing:-.4px;}
+    .section-title p{margin:0; color:var(--muted); max-width: 78ch;}
 
-    /* Cards */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:14px;
-    }
+    .grid{display:grid; grid-template-columns: repeat(12, 1fr); gap:14px;}
     .card{
       grid-column: span 6;
-      background: rgba(255,255,255,.04);
+      background: var(--card);
       border: 1px solid rgba(255,255,255,.10);
       border-radius: var(--radius);
       padding:16px;
-      overflow:hidden;
       box-shadow: 0 14px 40px rgba(0,0,0,.22);
     }
     .card h3{margin:0 0 8px; font-size:18px;}
@@ -231,47 +180,7 @@
     .card ul{margin:10px 0 0; padding-left:18px; color:var(--muted); font-weight:650;}
     .card li{margin:6px 0;}
 
-    .icon-row{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
-    .icon{
-      width:38px; height:38px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(68,183,255,.18), rgba(124,77,255,.16));
-      border: 1px solid rgba(255,255,255,.10);
-      display:flex; align-items:center; justify-content:center;
-      flex:0 0 auto;
-    }
-    .icon svg{width:20px; height:20px; opacity:.9}
-
-    /* Process */
-    .process{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    .step{
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius);
-      padding:16px;
-    }
-    .num{
-      width:34px; height:34px;
-      border-radius:14px;
-      background: rgba(68,183,255,.16);
-      border: 1px solid rgba(68,183,255,.28);
-      display:flex; align-items:center; justify-content:center;
-      font-weight:900;
-      margin-bottom:10px;
-      color: var(--text);
-    }
-    .step h3{margin:0 0 8px;}
-    .step p{margin:0; color:var(--muted);}
-
-    /* Packages */
-    .packages{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
+    .packages{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;}
     .pkg{
       border-radius: var(--radius);
       padding:16px;
@@ -303,18 +212,29 @@
     .pkg p{margin:0 0 10px; color:var(--muted);}
     .pkg ul{margin:0; padding-left:18px; color:var(--muted); font-weight:650;}
     .pkg li{margin:6px 0;}
-    .pkg .price{
-      margin-top:12px;
-      color: var(--muted2);
-      font-size:13px;
-    }
+    .pkg .price{margin-top:12px; color: var(--muted2); font-size:13px;}
 
-    /* Gallery */
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:14px;
+    .process{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;}
+    .step{
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding:16px;
     }
+    .num{
+      width:34px; height:34px;
+      border-radius:14px;
+      background: rgba(68,183,255,.16);
+      border: 1px solid rgba(68,183,255,.28);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900;
+      margin-bottom:10px;
+      color: var(--text);
+    }
+    .step h3{margin:0 0 8px;}
+    .step p{margin:0; color:var(--muted);}
+
+    .gallery{display:grid; grid-template-columns: repeat(12, 1fr); gap:14px;}
     .shot{
       grid-column: span 4;
       border-radius: var(--radius);
@@ -324,46 +244,25 @@
       box-shadow: 0 18px 50px rgba(0,0,0,.25);
     }
     .shot img{width:100%; height:220px; object-fit:cover; display:block;}
-    .shot .cap{
-      padding:12px;
-      color: var(--muted);
-      font-size:13px;
-      border-top: 1px solid rgba(255,255,255,.08);
-    }
+    .shot .cap{padding:12px; color: var(--muted); font-size:13px; border-top: 1px solid rgba(255,255,255,.08);}
 
-    /* FAQ */
-    .faq{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-    }
+    .faq{display:grid; grid-template-columns: 1fr 1fr; gap:14px;}
     details{
       border-radius: var(--radius);
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       padding:14px 14px;
     }
-    summary{
-      cursor:pointer;
-      font-weight:900;
-      color: var(--text);
-      list-style:none;
-    }
+    summary{cursor:pointer; font-weight:900; color: var(--text); list-style:none;}
     summary::-webkit-details-marker{display:none}
     details p{margin:10px 0 0; color:var(--muted);}
 
-    /* Contact */
     .contact{
       border-top:1px solid rgba(255,255,255,.08);
       border-bottom:1px solid rgba(255,255,255,.08);
       background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
     }
-    form{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-      margin-top:16px;
-    }
+    form{display:grid; grid-template-columns: repeat(12, 1fr); gap:12px; margin-top:16px;}
     label{font-weight:900; font-size:13px; color:var(--text);}
     .field{grid-column: span 6;}
     .field.full{grid-column: span 12;}
@@ -383,14 +282,49 @@
     .form-actions{grid-column: span 12; display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
     .hint{color:var(--muted2); font-size:13px;}
 
-    footer{
-      padding:26px 0;
-      color: var(--muted2);
-      font-size:13px;
-    }
+    footer{padding:26px 0; color: var(--muted2); font-size:13px;}
     footer a{color: var(--muted2); text-decoration: underline;}
 
-    /* Responsive */
+    /* Cookie Banner */
+    .cookie{
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
+      display: none;
+    }
+    .cookie-box{
+      max-width: var(--max);
+      margin: 0 auto;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(15,26,48,.92);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .cookie-text{
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 80ch;
+    }
+    .cookie-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn-small{
+      padding:10px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
     @media (max-width: 980px){
       .hero-grid{grid-template-columns:1fr;}
       h1{font-size:40px;}
@@ -406,6 +340,8 @@
 </head>
 
 <body>
+  <!-- CONFIG: IDs and endpoints are set in the script at the bottom -->
+
   <div class="topbar">
     <div class="wrap">
       <div class="nav">
@@ -454,7 +390,6 @@
           </div>
 
           <aside class="hero-card" aria-label="Hero Bild und Highlights">
-            <!-- Free-to-use Example Image (Unsplash). Replace later with your own. -->
             <div class="img" style="background-image:url('https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1600&q=80');"></div>
             <div class="overlay"></div>
 
@@ -487,19 +422,12 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Leistungen</h2>
-          <p>Fokus auf Dokumentation und Nachweisbarkeit. Nicht nur schöne Bilder, sondern planbare Updates und klare Ablage.</p>
+          <p>Fokus auf Dokumentation und Nachweisbarkeit. Planbare Updates und klare Ablage.</p>
         </div>
 
         <div class="grid">
           <div class="card">
-            <div class="icon-row">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M7 12h10M12 7v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <h3>Baufortschrittsdokumentation</h3>
-            </div>
+            <h3>Baufortschrittsdokumentation</h3>
             <p>Regelmäßige Kontrollflüge mit wiederkehrenden Perspektiven und Vergleichbarkeit über Zeit.</p>
             <ul>
               <li>Wöchentlich oder monatlich</li>
@@ -509,15 +437,7 @@
           </div>
 
           <div class="card">
-            <div class="icon-row">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" />
-                  <path d="M7 10h6M7 14h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <h3>Investoren-Reporting</h3>
-            </div>
+            <h3>Investoren-Reporting</h3>
             <p>Material für Updates, Reports und Präsentationen, klar sortiert und schnell weiterleitbar.</p>
             <ul>
               <li>Statusbilder für Stakeholder</li>
@@ -527,15 +447,7 @@
           </div>
 
           <div class="card">
-            <div class="icon-row">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M4 20l6-6 4 4 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="2" opacity=".55"/>
-                </svg>
-              </div>
-              <h3>Objekt- und Grundstückskontrolle</h3>
-            </div>
+            <h3>Objekt- und Grundstückskontrolle</h3>
             <p>Kontrollflüge für Bestandsobjekte, Gewerbeflächen und Grundstücke, projektabhängig planbar.</p>
             <ul>
               <li>Dächer und Außenhüllen</li>
@@ -545,16 +457,8 @@
           </div>
 
           <div class="card">
-            <div class="icon-row">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M12 3l8 6-8 6-8-6 8-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M4 15l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h3>3D Mapping (auf Anfrage)</h3>
-            </div>
-            <p>Photogrammetrie und Geländeaufnahmen. Dieses Angebot befindet sich im Aufbau und ist objektabhängig.</p>
+            <h3>3D Mapping (auf Anfrage)</h3>
+            <p>Photogrammetrie und Geländeaufnahmen. Angebot im Aufbau und objektabhängig.</p>
             <ul>
               <li>Machbarkeitscheck vorab</li>
               <li>Lieferumfang nach Absprache</li>
@@ -569,7 +473,7 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Pakete</h2>
-          <p>Bodennah starten, professionell liefern. Für wiederkehrende Dokumentation lohnt sich Monitoring.</p>
+          <p>Bodennah starten, professionell liefern. Monitoring eignet sich für wiederkehrende Dokumentation.</p>
         </div>
 
         <div class="packages">
@@ -588,7 +492,7 @@
           <div class="pkg featured">
             <div class="tag">Empfohlen</div>
             <h3>Monitoring</h3>
-            <p>Regelmäßige Updates mit Vergleichbarkeit. Ideal für Bauphasen.</p>
+            <p>Regelmäßige Updates mit Vergleichbarkeit, ideal für Bauphasen.</p>
             <ul>
               <li>Wöchentlich oder monatlich</li>
               <li>Wiederkehrende Perspektiven</li>
@@ -600,7 +504,7 @@
           <div class="pkg">
             <div class="tag">Premium</div>
             <h3>Reporting</h3>
-            <p>Für Investoren und Partner. Priorisiert, sauber aufbereitet, reportfähig.</p>
+            <p>Für Investoren und Partner. Priorisiert, reportfähig aufbereitet.</p>
             <ul>
               <li>Mehrere Flüge pro Monat</li>
               <li>Material für Reports und Präsentationen</li>
@@ -616,14 +520,14 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Ablauf</h2>
-          <p>Ein klarer Prozess, wie ihn professionelle Anbieter nutzen. Planbar, sauber, wiederholbar.</p>
+          <p>Planbar, sauber, wiederholbar.</p>
         </div>
 
         <div class="process">
           <div class="step">
             <div class="num">1</div>
             <h3>Briefing</h3>
-            <p>Standort, Ziel, Motive, Intervall. Danach bekommen Sie ein klares Angebot und einen Plan.</p>
+            <p>Standort, Ziel, Motive, Intervall. Danach erhalten Sie Angebot und Plan.</p>
           </div>
           <div class="step">
             <div class="num">2</div>
@@ -633,7 +537,7 @@
           <div class="step">
             <div class="num">3</div>
             <h3>Lieferung</h3>
-            <p>Sortiert, aufbereitet und bereitgestellt. So können Sie Inhalte direkt verwenden und weiterleiten.</p>
+            <p>Sortiert, aufbereitet und bereitgestellt. Inhalte sind direkt nutzbar.</p>
           </div>
         </div>
       </div>
@@ -643,7 +547,7 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Beispiele</h2>
-          <p>Platzhalter mit free-to-use Bildern. Ersetzen Sie diese später durch eigene Aufnahmen. Diese Sektion wirkt stark, weil Besucher sofort etwas sehen.</p>
+          <p>Platzhalter mit free-to-use Bildern. Später durch eigenes Material ersetzen.</p>
         </div>
 
         <div class="gallery">
@@ -660,10 +564,6 @@
             <div class="cap">Grundstücksstatus, Umfeld, Zuwegungen, klare Übersicht.</div>
           </div>
         </div>
-
-        <p class="hint" style="margin-top:12px;">
-          Hinweis: Unsplash Bilder sind free-to-use. Für maximale Rechtssicherheit können wir später eine kurze Quellenliste im Footer ergänzen.
-        </p>
       </div>
     </section>
 
@@ -671,18 +571,18 @@
       <div class="wrap">
         <div class="section-title">
           <h2>FAQ</h2>
-          <p>Die häufigsten Fragen, die Interessenten vor einer Anfrage haben. Das senkt Rückfragen und erhöht Vertrauen.</p>
+          <p>Häufige Fragen vor einer Anfrage.</p>
         </div>
 
         <div class="faq">
           <details>
             <summary>In welchen Intervallen sind Flüge möglich?</summary>
-            <p>Typisch sind wöchentliche oder monatliche Intervalle. Das Intervall hängt vom Projekt, dem Baufortschritt und dem Reporting-Bedarf ab.</p>
+            <p>Typisch sind wöchentliche oder monatliche Intervalle. Das hängt vom Projekt und dem Reporting-Bedarf ab.</p>
           </details>
 
           <details>
             <summary>Wie bekomme ich die Daten?</summary>
-            <p>Sie erhalten eine strukturierte digitale Bereitstellung. Auf Wunsch zusätzlich eine Report-Auswahl für Investorenupdates.</p>
+            <p>Sie erhalten eine strukturierte digitale Bereitstellung. Optional eine Report-Auswahl für Updates.</p>
           </details>
 
           <details>
@@ -692,7 +592,7 @@
 
           <details>
             <summary>Bieten Sie 3D Mapping an?</summary>
-            <p>Ja, auf Anfrage und projektabhängig. Dieses Angebot befindet sich im Aufbau. Wir klären Machbarkeit vorab.</p>
+            <p>Ja, auf Anfrage und projektabhängig. Wir klären die Machbarkeit vorab.</p>
           </details>
         </div>
       </div>
@@ -702,15 +602,10 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Projekt anfragen</h2>
-          <p>Schicken Sie kurz die Eckdaten. Wir melden uns mit Rückfragen und einem klaren Angebot.</p>
+          <p>Schicken Sie kurz die Eckdaten. Wir melden uns zeitnah.</p>
         </div>
 
-        <!-- Option 1: Einfach, aber unzuverlässig: mailto -->
-        <!-- <form action="mailto:DEINE_EMAIL@DOMAIN.DE" method="post" enctype="text/plain"> -->
-
-        <!-- Option 2 (empfohlen): Formspree oder Netlify Forms -->
-        <!-- Formspree: https://formspree.io/  -> du bekommst eine URL und trägst sie hier ein -->
-        <form action="https://formspree.io/f/DEINCODE" method="POST">
+        <form id="contactForm" action="https://formspree.io/f/DEIN_FORMSPREE_CODE" method="POST">
           <div class="field">
             <label for="name">Name</label>
             <input id="name" name="name" type="text" required />
@@ -745,11 +640,16 @@
             <textarea id="message" name="message" placeholder="Was genau benötigen Sie? Gibt es Termine oder Besonderheiten?"></textarea>
           </div>
 
+          <input type="hidden" name="_subject" value="Neue Anfrage über deraneck aerial Website">
+          <input type="text" name="_gotcha" style="display:none">
+
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Anfrage senden</button>
-            <span class="hint">Rechtlicher Hinweis: Flüge erfolgen nach geltenden Vorschriften. Projektabhängig können Genehmigungen erforderlich sein.</span>
+            <span class="hint">Flüge erfolgen nach geltenden Vorschriften. Projektabhängig können Genehmigungen erforderlich sein.</span>
           </div>
         </form>
+
+        <div class="hint" id="formStatus" style="margin-top:12px;"></div>
       </div>
     </section>
 
@@ -758,32 +658,143 @@
         <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:space-between; align-items:center;">
           <div>© <span id="year"></span> Deraneck Aerial</div>
           <div>
-            <a href="impressum.html">Impressum</a>
-            <a href="#datenschutz">Datenschutz</a>
+            <a href="impressum.html">Impressum</a> |
+            <a href="datenschutz.html">Datenschutz</a>
           </div>
         </div>
 
-        <div id="impressum" style="margin-top:16px;">
-          <strong>Impressum</strong><br/>
-          <span class="hint">Bitte ergänzen: Name, Anschrift, Kontakt, USt-ID falls vorhanden, Verantwortlicher gemäß § 18 MStV.</span>
-        </div>
-
-        <div id="datenschutz" style="margin-top:10px;">
-          <strong>Datenschutz</strong><br/>
-          <span class="hint">Bitte ergänzen: Hosting, Kontakt, Zweck der Datenerhebung, Formularanbieter falls genutzt (z. B. Formspree).</span>
-        </div>
-
         <div class="hint" style="margin-top:10px;">
-          Beispielbilder: Unsplash, free-to-use, nur als Platzhalter. Später durch eigenes Material ersetzen.
+          Beispielbilder: Unsplash, free-to-use, Platzhalter. Später durch eigenes Material ersetzen.
         </div>
       </div>
     </footer>
   </main>
 
+  <!-- Cookie Banner -->
+  <div class="cookie" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie Einwilligung">
+    <div class="cookie-box">
+      <div class="cookie-text">
+        Wir verwenden optionale Tracking-Technologien, um die Website zu verbessern und Anfragen besser zu verstehen. Sie können zustimmen oder ablehnen. Details finden Sie in der Datenschutzerklärung.
+      </div>
+      <div class="cookie-actions">
+        <button class="btn btn-ghost btn-small" id="cookieReject">Ablehnen</button>
+        <button class="btn btn-primary btn-small" id="cookieAccept">Zustimmen</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // ==========================
+    // CONFIG
+    // ==========================
+    const CONFIG = {
+      formspreeEndpoint: "https://formspree.io/f/mqedbkqa",
+      enableGA4: true,
+      ga4MeasurementId: "G-XXXXXXXXXX",
+      enableMetaPixel: false,
+      metaPixelId: "000000000000000",
+      enableLinkedIn: false,
+      linkedInPartnerId: "000000"
+    };
+
+    // Set form endpoint from config
+    const form = document.getElementById("contactForm");
+    if (form && CONFIG.formspreeEndpoint && CONFIG.formspreeEndpoint.includes("formspree.io")) {
+      form.action = CONFIG.formspreeEndpoint;
+    }
+
+    // Simple form status text (works with Formspree default behavior)
+    const formStatus = document.getElementById("formStatus");
+    if (form) {
+      form.addEventListener("submit", () => {
+        if (formStatus) formStatus.textContent = "Danke, Ihre Anfrage wird gesendet.";
+      });
+    }
+
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ==========================
+    // Consent and tracking loader
+    // ==========================
+    const CONSENT_KEY = "da_cookie_consent_v1"; // values: "accepted" | "rejected"
+
+    function hasConsent() {
+      return localStorage.getItem(CONSENT_KEY) === "accepted";
+    }
+    function setConsent(value) {
+      localStorage.setItem(CONSENT_KEY, value);
+    }
+
+    function loadScript(src, attrs = {}) {
+      const s = document.createElement("script");
+      s.src = src;
+      s.async = true;
+      Object.entries(attrs).forEach(([k,v]) => s.setAttribute(k, v));
+      document.head.appendChild(s);
+    }
+
+    function enableTracking() {
+      // GA4
+      if (CONFIG.enableGA4 && CONFIG.ga4MeasurementId && CONFIG.ga4MeasurementId.startsWith("G-")) {
+        loadScript(`https://www.googletagmanager.com/gtag/js?id=${CONFIG.ga4MeasurementId}`);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag("js", new Date());
+        gtag("config", CONFIG.ga4MeasurementId, { anonymize_ip: true });
+      }
+
+      // Meta Pixel
+      if (CONFIG.enableMetaPixel && CONFIG.metaPixelId && CONFIG.metaPixelId !== "000000000000000") {
+        !function(f,b,e,v,n,t,s){
+          if(f.fbq)return; n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n; n.push=n; n.loaded=!0; n.version="2.0";
+          n.queue=[]; t=b.createElement(e); t.async=!0; t.src=v;
+          s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s)
+        }(window, document,"script","https://connect.facebook.net/en_US/fbevents.js");
+        fbq("init", CONFIG.metaPixelId);
+        fbq("track", "PageView");
+      }
+
+      // LinkedIn Insight Tag
+      if (CONFIG.enableLinkedIn && CONFIG.linkedInPartnerId && CONFIG.linkedInPartnerId !== "000000") {
+        window._linkedin_partner_id = CONFIG.linkedInPartnerId;
+        window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+        window._linkedin_data_partner_ids.push(window._linkedin_partner_id);
+        (function(l) {
+          if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])}; window.lintrk.q=[]}
+          var s = document.getElementsByTagName("script")[0];
+          var b = document.createElement("script");
+          b.type = "text/javascript"; b.async = true;
+          b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+          s.parentNode.insertBefore(b, s);
+        })(window.lintrk);
+      }
+    }
+
+    // Banner logic
+    const banner = document.getElementById("cookieBanner");
+    const btnAccept = document.getElementById("cookieAccept");
+    const btnReject = document.getElementById("cookieReject");
+
+    const stored = localStorage.getItem(CONSENT_KEY);
+    if (!stored) {
+      banner.style.display = "block";
+    } else if (stored === "accepted") {
+      enableTracking();
+    }
+
+    btnAccept.addEventListener("click", () => {
+      setConsent("accepted");
+      banner.style.display = "none";
+      enableTracking();
+    });
+
+    btnReject.addEventListener("click", () => {
+      setConsent("rejected");
+      banner.style.display = "none";
+    });
   </script>
 </body>
 </html>
-
-
